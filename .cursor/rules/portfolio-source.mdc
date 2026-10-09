@@ -1,0 +1,21 @@
+---
+description: Portfolio content comes only from the resume markdown and local images
+alwaysApply: true
+---
+
+# Portfolio source of truth
+
+This project is a personal portfolio. Page copy, facts, and the portrait come from files, not from guesses.
+
+- Read `content/resume.md` before writing any bio, job, project, skill, date, or link.
+- If a fact is missing, leave it blank or ask. Never invent employers, titles, dates, metrics, or URLs.
+- The portrait is `public/images/portrait.jpg`, referenced by the `photo` field in the resume frontmatter.
+- When the resume markdown changes, update the site to match it. Do not keep a second copy of the same facts in components.
+- Keep section headings in `content/resume.md` stable: About, Skills, Experience, Projects, Education, Contact.
+
+```md
+<!-- ❌ BAD: hardcoded in a component -->
+<p>5 years at Acme, led a team of 12.</p>
+
+<!-- ✅ GOOD: render the Experience block from content/resume.md -->
+```

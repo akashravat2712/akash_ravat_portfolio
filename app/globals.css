@@ -1,0 +1,416 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0a0a0a;
+  --bg-elevated: #121212;
+  --bg-panel: #161616;
+  --red: #e10600;
+  --red-dim: #8b0400;
+  --red-glow: rgba(225, 6, 0, 0.35);
+  --text: #f2f2f2;
+  --text-muted: #9a9a9a;
+  --border: #2a2a2a;
+  --grid: rgba(225, 6, 0, 0.06);
+  --font-display: "Orbitron", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-panel: var(--bg-panel);
+  --color-red: var(--red);
+  --color-red-dim: var(--red-dim);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-border: var(--border);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--red);
+  color: white;
+}
+
+.robot-grid {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(225, 6, 0, 0.08) 50%,
+    transparent 100%
+  );
+  background-size: 100% 220%;
+  animation: scan 6s linear infinite;
+}
+
+@keyframes scan {
+  0% {
+    background-position: 0% -100%;
+  }
+  100% {
+    background-position: 0% 200%;
+  }
+}
+
+@keyframes pulse-red {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--red-glow);
+  }
+  50% {
+    box-shadow: 0 0 24px 2px var(--red-glow);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s ease-out both;
+}
+
+.animate-pulse-red {
+  animation: pulse-red 3s ease-in-out infinite;
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hover-lift {
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  border-color: rgba(225, 6, 0, 0.45);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 20px var(--red-glow);
+}
+
+/* Book-page flip. The grid cell stays fixed; the sheet hinges on the left spine. */
+.pcard {
+  position: relative;
+  z-index: 0;
+  height: 320px;
+  perspective: 1800px;
+  perspective-origin: left center;
+  -webkit-perspective: 1800px;
+}
+
+.pcard.is-flipped,
+.pcard.is-raised {
+  z-index: 2;
+}
+
+.pcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: translateX(0%) rotateY(0deg);
+  transition: transform 0.9s cubic-bezier(0.55, 0.05, 0.25, 1);
+}
+
+.pcard.is-flipped .pcard-inner {
+  transform: translateX(100%) rotateY(-180deg);
+}
+
+.pcard-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--bg-panel);
+}
+
+.pcard-front {
+  transform: rotateY(0deg) translateZ(1px);
+  pointer-events: auto;
+}
+
+.pcard-back {
+  transform: rotateY(180deg) translateZ(1px);
+  pointer-events: none;
+}
+
+.pcard.is-flipped .pcard-front {
+  pointer-events: none;
+}
+
+.pcard.is-flipped .pcard-back {
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-in,
+  .hover-lift,
+  .animate-fade-up,
+  .scanline::after,
+  .pcard-inner,
+  .role-caret,
+  .hero-orbit-badge {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+
+  .pcard.is-flipped .pcard-inner {
+    transform: none;
+  }
+
+  .pcard.is-flipped .pcard-front {
+    visibility: hidden;
+  }
+
+  .pcard.is-flipped .pcard-back {
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+/* Wins over .hud-frame { position: relative }, which would stack the faces and grow the card. */
+.pcard-face.hud-frame {
+  position: absolute;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.18) 8px, transparent 22px),
+    var(--bg-panel);
+  border-left: 3px solid var(--red-dim);
+}
+
+.role-caret {
+  display: inline-block;
+  width: 0.55ch;
+  height: 0.95em;
+  margin-left: 0.2em;
+  vertical-align: -0.08em;
+  background: var(--red);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.hero-orbit {
+  position: relative;
+  width: min(100%, 480px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.hero-orbit-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-orbit-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-orbit-chips {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-orbit-chip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0.28rem 0.6rem;
+  border-radius: 4px;
+  color: var(--red);
+  background: rgba(10, 10, 10, 0.88);
+  border: 1px solid rgba(225, 6, 0, 0.45);
+  box-shadow: 0 0 12px rgba(225, 6, 0, 0.18);
+  opacity: 0;
+}
+
+.hero-orbit-core {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  width: 34%;
+  height: 34%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-orbit-badge {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--red);
+  filter: drop-shadow(0 0 12px rgba(225, 6, 0, 0.45));
+  animation: avatar-pulse 3.2s ease-in-out infinite;
+}
+
+.hero-orbit-hex {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-orbit-initials {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 4.2vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 0 16px rgba(225, 6, 0, 0.8);
+}
+
+@keyframes avatar-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 10px rgba(225, 6, 0, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgba(225, 6, 0, 0.75));
+  }
+}
+
+.hud-frame {
+  position: relative;
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+}
+
+.hud-frame::before,
+.hud-frame::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--red);
+}
+
+.hud-frame::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.hud-frame::after {
+  right: -1px;
+  bottom: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.intro-portrait {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}

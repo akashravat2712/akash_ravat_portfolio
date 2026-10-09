@@ -1,0 +1,32 @@
+---
+description: Shape of the portfolio resume markdown
+globs: content/**/*.md
+alwaysApply: false
+---
+
+# Resume markdown
+
+`content/resume.md` is the only content file. Keep this shape so the site can parse it.
+
+Frontmatter keys, in this order: `name`, `role`, `location`, `email`, `phone`, `github`, `linkedin`, `photo`, `tagline`, `availability`.
+
+Sections, in this order: About, Skills, Experience, Projects, Education, Contact.
+
+Experience and Projects use a level-3 heading, then labeled lines, then a Highlights list.
+
+```md
+### Job title
+
+- company: Northwind
+- dates: 2022 — 2024
+- location: Pune
+- summary: One sentence on the role.
+
+Highlights:
+
+- Shipped the billing API used by checkout.
+```
+
+- One skill group per `###` heading under Skills, with a bullet list.
+- Education uses the same labeled-line pattern as Experience (`school`, `dates`, `details`).
+- Leave unknown fields empty. Do not delete a heading because a section is still blank.
