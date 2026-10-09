@@ -5,8 +5,8 @@ import {
   Phone,
   MapPin,
   Bot,
+  Send,
 } from "lucide-react";
-import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 import type { ResumeData } from "@/lib/resume";
 
@@ -34,11 +34,6 @@ export default function Footer({ data }: FooterProps) {
           <h2 className="font-[family-name:var(--font-display)] text-2xl tracking-wide md:text-3xl">
             Contact
           </h2>
-          {contact ? (
-            <p className="mt-4 max-w-md text-sm text-muted md:text-base">
-              {contact}
-            </p>
-          ) : null}
           <ul className="mt-8 space-y-3 text-sm text-muted">
             {frontmatter.location ? (
               <li className="flex items-center gap-3">
@@ -69,55 +64,69 @@ export default function Footer({ data }: FooterProps) {
               </li>
             ) : null}
           </ul>
-          <div className="mt-6 flex gap-3">
-            {githubUrl ? (
-              <a
-                href={githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 w-10 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5" />
-              </a>
+        </Reveal>
+        <Reveal delayMs={120}>
+          <div className="hud-frame hover-lift flex h-full flex-col p-5 md:p-6">
+            <p className="mb-4 font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-red">
+              Connect
+            </p>
+            <h3 className="font-[family-name:var(--font-display)] text-2xl tracking-wide">
+              Connect with me
+            </h3>
+            {contact ? (
+              <p className="mt-4 text-sm text-muted md:text-base">{contact}</p>
             ) : null}
-            {linkedinUrl ? (
-              <a
-                href={linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 w-10 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-            ) : null}
-            {frontmatter.phone ? (
-              <a
-                href={`tel:${frontmatter.phone}`}
-                className="inline-flex h-10 w-10 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
-                aria-label="Call"
-              >
-                <Phone className="h-5 w-5" />
-              </a>
-            ) : null}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {githubUrl ? (
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 w-11 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
+                  aria-label="GitHub"
+                >
+                  <Github className="h-5 w-5" />
+                </a>
+              ) : null}
+              {linkedinUrl ? (
+                <a
+                  href={linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-11 w-11 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              ) : null}
+              {frontmatter.phone ? (
+                <a
+                  href={`tel:${frontmatter.phone}`}
+                  className="inline-flex h-11 w-11 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
+                  aria-label="Call"
+                >
+                  <Phone className="h-5 w-5" />
+                </a>
+              ) : null}
+              {frontmatter.email ? (
+                <a
+                  href={`mailto:${frontmatter.email}`}
+                  className="inline-flex h-11 w-11 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
+                  aria-label="Email"
+                >
+                  <Mail className="h-5 w-5" />
+                </a>
+              ) : null}
+            </div>
             {frontmatter.email ? (
               <a
                 href={`mailto:${frontmatter.email}`}
-                className="inline-flex h-10 w-10 items-center justify-center border border-border text-muted transition hover:border-red hover:text-red"
-                aria-label="Email"
+                className="mt-8 inline-flex w-full items-center justify-center gap-2 bg-red px-4 py-3 font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-white transition hover:bg-red-dim"
               >
-                <Mail className="h-5 w-5" />
+                <Send className="h-4 w-4" aria-hidden />
+                Email
               </a>
             ) : null}
-          </div>
-        </Reveal>
-        <Reveal delayMs={120}>
-          <div className="hud-frame hover-lift p-5 md:p-6">
-            <p className="mb-4 font-[family-name:var(--font-mono)] text-xs uppercase tracking-wider text-red">
-              Contact
-            </p>
-            <ContactForm />
           </div>
         </Reveal>
       </div>

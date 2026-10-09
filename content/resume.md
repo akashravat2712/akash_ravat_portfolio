@@ -205,4 +205,4 @@ Highlights:
 
 ## Contact
 
-Available for full-stack, data science, and AI/ML roles. Reach out by email or the contact form below.
+Available for full-stack, data science, and AI/ML roles. Reach out by email.

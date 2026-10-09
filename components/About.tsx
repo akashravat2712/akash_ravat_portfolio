@@ -26,7 +26,7 @@ export default function About({ about, photo, name }: AboutProps) {
                 <User className="h-5 w-5 text-red" aria-hidden />
                 Introduction
               </h2>
-              <div className="mt-4 space-y-5 text-base leading-8 text-muted md:text-lg">
+              <div className="mt-4 space-y-5 text-justify text-base leading-8 text-muted md:text-lg">
                 {paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}

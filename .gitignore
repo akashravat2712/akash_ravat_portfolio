@@ -36,5 +36,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local contact inbox
+# leftover local contact inbox
 /content/messages.json

@@ -11,5 +11,5 @@ alwaysApply: false
 - All bio, jobs, projects, skills, and links come from `content/resume.md` via `lib/resume.ts`. Never hardcode resume facts in components.
 - Public page: `app/page.tsx` reads markdown and passes data into section components.
 - Admin: `/admin` edits the same markdown through `/api/resume` after cookie auth from `ADMIN_PASSWORD`.
-- Contact form posts to `/api/contact` only. English UI copy only.
+- English UI copy only. Contact actions use the email, phone, and social links from resume frontmatter.
 - Prefer Lucide icons for nav, social, skills, and admin actions.
