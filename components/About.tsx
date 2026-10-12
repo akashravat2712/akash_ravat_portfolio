@@ -40,7 +40,7 @@ export default function About({ about, photo, name }: AboutProps) {
                     alt={name ? `Portrait of ${name}` : "Portrait"}
                     fill
                     sizes="(min-width: 768px) 320px, 80vw"
-                    className="object-cover object-[center_84%]"
+                    className="object-cover object-center"
                   />
                 </div>
               </div>

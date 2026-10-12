@@ -195,7 +195,7 @@ Highlights:
 
 - school: Ahmedabad Institute of Technology (AIT)
 - dates: 2023 — 2026
-- details: CGPA: 8.26
+- details: CGPA: 8.76
 
 ### Diploma in Information Technology
 
